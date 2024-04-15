@@ -16,6 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body>
       <div className="bg-gradient-to-r from-purple-500 to-fuchsia-500 p-3 sticky top-0 shadow-md">
         <div className="flex items-center justify-start text-sky-200 text-4xl italic pl-4 py-2">
