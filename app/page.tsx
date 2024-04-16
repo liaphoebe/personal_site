@@ -19,6 +19,7 @@ export default function Home() {
 
   const [inputText, setInputText] = useState('');
   const [log, setLog] = useState<Array<Entry>>([]);
+  const promptLabel = 'jps-mbp:~$'
 
   const commands: Commands = {
     'help': {
@@ -63,7 +64,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gradient-to-r from-violet-500 to-fuchsia-500 ">
+    <main className="flex min-h-screen flex-col items-center justify-between p-2 sm:p-24 bg-gradient-to-r from-violet-500 to-fuchsia-500 ">
 
       <div className="w-full">
         <div className="coding inverse-toggle px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased 
@@ -76,7 +77,7 @@ export default function Home() {
           <div className="mt-4 flex flex-col">
 
             <div className="flex-grow flex">
-              <span className="text-green-400">computer:~$</span>
+              <span className="text-green-400">{promptLabel}</span>
               <p className="flex-1 typing items-center pl-2">
                 help
               </p>
@@ -90,14 +91,14 @@ export default function Home() {
             <div id="log" className="flex-grow flex flex-col">
               {log.map((item, idx) => (
                 <div key={idx} className="flex-grow flex">
-                  { item['type'] == 'input' && <span className="text-green-400">computer:~$</span> }
+                  { item['type'] == 'input' && <span className="text-green-400">{promptLabel}</span> }
                   <p className="flex-1 typing items-center pl-2">{item['content']}</p>
                 </div>
               ))}
             </div>
 
             <div id="prompt" className="flex-grow flex">
-              <span className="text-green-400">computer:~$</span>
+              <span className="text-green-400">{promptLabel}</span>
               <p className="flex-1 typing items-center pl-2">
                 <input id="terminal-input" className="text-white-400 text-white bg-transparent w-full outline-none" 
                   value={inputText} autoFocus onKeyDown={handleKeyDown} onChange={(e) => setInputText(e.target.value)}></input>
