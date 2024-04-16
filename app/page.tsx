@@ -39,8 +39,12 @@ export default function Home() {
       </div>
     ),
     'resume.to': (
-      <div>
-
+      <div className="flex py-3">
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+          <button className="p-2 bg-blue-500 text-white mt-4 rounded">
+            View My Resume
+          </button>
+        </a>
       </div>
     ),
     'skills': {
