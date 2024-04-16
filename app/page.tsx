@@ -30,11 +30,11 @@ export default function Home() {
       <div className="flex flex-grow">
         <Image className="object-cover w-20 h-20 rounded-full" src="/me.JPG" alt=""></Image>
         <p className="px-3">
-          Hey I\'m Julia! I\'m a professional software engineer. I\'ve been working in tech since the summer before my senior year of college, and have been learning passionately and vigorously since I picked up Python in my high school astronomy class. 
+          Hey I&apos;m Julia! I&apos;m a professional software engineer. I&apos;ve been working in tech since the summer before my senior year of college, and have been learning passionately and vigorously since I picked up Python in my high school astronomy class. 
           <br/><br/>
-          I am meticulous and hands-on in my work, and I take a research-driven approach. I am especially passionate about accessibility in technology, and believe strongly that the cutting-edge of technology at the highest echelons of the industry isn\'t worth anything until I see it at my public library or the boutique up the road.
+          I am meticulous and hands-on in my work, and I take a research-driven approach. I am especially passionate about accessibility in technology, and believe strongly that the cutting-edge of technology at the highest echelons of the industry isn&apos;t worth anything until I see it at my public library or the boutique up the road.
           <br/><br/>
-          Currently I\'m spending my time working on a passion project pertaining to historical western Polynesia circa 1000 C.E., but am also actively looking for a long-term project and team to join! Feel free to reach out :\)
+          Currently I&apos;m spending my time working on a passion project pertaining to historical western Polynesia circa 1000 C.E., but am also actively looking for a long-term project and team to join! Feel free to reach out :)
         </p>
       </div>
     ),
