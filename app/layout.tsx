@@ -24,12 +24,22 @@ export default function RootLayout({
 
       </head>
       <body>
-      <div className="bg-gradient-to-r from-purple-500 to-fuchsia-500 p-3 sticky top-0 shadow-md">
-        <div className="flex items-center justify-start text-sky-200 text-4xl italic pl-4 py-2">
-          Julia Phoebe Sarris
+
+        <div className="bg-gradient-to-r from-purple-500 to-fuchsia-500 p-3 sticky top-0 shadow-md">
+          <div className="flex justify-between text-sky-200 pl-4 pr-4">
+            <div className="text-4xl italic py-2">
+              Julia Phoebe Sarris
+            </div>
+            <div className="text-2xl italic text-right">
+              juliasarris@gmail.com
+              <br />
+              (862) 217-7266
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={inter.className}>{children}</div>
+
+        <div className={inter.className}>{children}</div>
+        
         <div className="flex flex-row fixed bottom-5 right-5">
           <a href="https://www.linkedin.com/in/julia-sarris-4550032ab/" target="_blank" rel="noopener noreferrer">
             <button className="mx-3 p-4 w-20 h-20 cursor-pointer rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-700 flex items-center justify-center">

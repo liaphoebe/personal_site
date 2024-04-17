@@ -1,6 +1,5 @@
 'use client'
 
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Home() {
@@ -26,45 +25,53 @@ export default function Home() {
   const promptLabel = 'jps-mbp:~$'
 
   const fileSystem: Directory = {
-    'about.me': (
-      <div className="flex flex-grow">
-        <Image className="object-cover w-20 h-20 rounded-full" src="/me.JPG" alt=""></Image>
-        <p className="px-3">
-          Hey I&apos;m Julia! I&apos;m a professional software engineer. I&apos;ve been working in tech since the summer before my senior year of college, and have been learning passionately and vigorously since I picked up Python in my high school astronomy class. 
-          <br/><br/>
-          I am meticulous and hands-on in my work, and I take a research-driven approach. I am especially passionate about accessibility in technology, and believe strongly that the cutting-edge of technology at the highest echelons of the industry isn&apos;t worth anything until I see it at my public library or the boutique up the road.
-          <br/><br/>
-          Currently I&apos;m spending my time working on a passion project pertaining to historical western Polynesia circa 1000 C.E., but am also actively looking for a long-term project and team to join! Feel free to reach out :)
-        </p>
-      </div>
-    ),
-    'resume.to': (
-      <div className="flex py-3">
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-          <button className="p-2 bg-blue-500 text-white mt-4 rounded">
-            View My Resume
-          </button>
-        </a>
-      </div>
-    ),
-    'skills': {
-      'expert.at': (
-        <div>
-
+    'root': {
+      'about.me': (
+        <div className="flex flex-grow">
+          <img className="object-cover w-20 h-20 rounded-full" src="/me.JPG" alt=""></img>
+          <p className="px-3">
+            Hey I&apos;m Julia! I&apos;m a professional software engineer. I&apos;ve been working in tech since the summer before my senior year of college, and have been learning passionately and vigorously since I picked up Python in my high school astronomy class.
+            <br /><br />
+            I am meticulous and hands-on in my work, and I take a research-driven approach. I am especially passionate about accessibility in technology, and believe strongly that the cutting-edge of technology at the highest echelons of the industry isn&apos;t worth anything until I see it at my public library or the boutique up the road.
+            <br /><br />
+            Currently I&apos;m spending my time working on a passion project pertaining to historical western Polynesia circa 1000 C.E., but am also actively looking for a long-term project and team to join! Feel free to reach out :)
+          </p>
         </div>
       ),
-      'proficient.in': (
-        <div>
-
+      'resume.to': (
+        <div className="flex py-3">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <button className="p-2 bg-blue-500 text-white mt-4 rounded">
+              View My Resume
+            </button>
+          </a>
         </div>
       ),
-      'familiar.with': (
-        <div> 
-
-        </div>
-      )
+      'skills': {
+        'proficient.in': (
+          <div>
+            Java Python Ruby Javascript HTML/CSS Golang C <br/>
+            React vue.js Angular next.js ext.js <br/>
+            Spring Rails Flask <br/>
+            PostgresQL MySQL Oracle GraphQL <br/>
+            AWS (S3 EC2 RDS) <br/>
+            git bash linux
+          </div>
+        ),
+        'familiar.with': (
+          <div>
+            clojure lisp <br/>
+            kafka <br/>
+            windows <br/>
+            figma <br/>
+          </div>
+        )
+      }
     }
   };
+
+  const [curPath, setCurPath] = useState('root');
+  const [curDir, setCurDir] = useState(fileSystem[curPath]);
 
   const commands: Commands = {
     'help': {
@@ -97,7 +104,7 @@ export default function Home() {
       'content': () => {
         return (
           <div className="flex-grow flex pl-5 sm:pl-0">
-            {Object.keys(fileSystem).map((item, idx) => (
+            {Object.keys(curDir).map((item, idx) => (
               <div key={idx} className="px-1">
                 <p className={styleFilename(item)}>{item}</p>
               </div>
@@ -111,9 +118,94 @@ export default function Home() {
       'content': (filename: string[]) => {
         return (
           <div className="flex-grow flex pl-5 sm:pl-0">
-            {fileSystem[filename[0]] as JSX.Element}    
+            {(curDir as Directory)[filename[0]] as JSX.Element}    
           </div>
         );
+      }
+    },
+    'pwd': {
+      'desc': 'display current directory',
+      'content': () => {
+        return (
+          <div className="flex-grow flex pl-5 sm:pl-0">
+            {curPath}
+          </div>
+        )
+      }
+    },
+    'cd': {
+      'desc': 'change directory. usage: cd <directory>',
+      'content': (args: string[]) => {
+        let path: string = args[0] || '/';
+        let sequence = path.split('/');
+        let tmpPath = curPath;
+        let tmpDir: Directory = curDir as Directory;
+        
+        const move = (step: string) => {
+          switch (step) {
+            case '':
+              tmpPath = 'root';
+              tmpDir = fileSystem['root'] as Directory;
+              break;
+            case '..':
+              if (tmpPath == 'root') {
+                return -3; // Error code for cd .. past root
+              }
+
+              // Cheating here lol
+              tmpPath = 'root';
+              tmpDir = fileSystem['root'] as Directory;
+              break;
+            case '.':
+              tmpPath = tmpPath;
+              tmpDir = tmpDir;
+              break;
+            default:
+              if (step.includes('.')) {
+                return -1; // Error code for trying to move into a file
+              }
+              if (!Object.keys(curDir).includes(step)) {
+                return -2; // Error code for trying to move into a directory that dne
+              }
+
+              tmpPath = `${tmpPath}/${step}`
+              tmpDir = tmpDir[step] as Directory;
+          }
+          return 0;
+        };
+
+        while (sequence.length > 0) {
+          let val = sequence.shift() as string;
+
+          switch (move(val)) {
+            case 0:
+              continue;
+            case -1:
+              return (
+                <div className="flex-grow flex pl-5 sm:pl-0">
+                  Error: {val} is a file
+                </div>
+              )
+            case -2:
+              return (
+                <div className="flex-grow flex pl-5 sm:pl-0">
+                  Error: {val} does not exist
+                </div>
+              )
+            case -3:
+              return (
+                <div className="flex-grow flex pl-5 sm:pl-0">
+                  Error: can't go up past root-level directory
+                </div>
+              )
+          }
+        }
+
+        setCurPath(tmpPath);
+        setCurDir(tmpDir);  
+        return (
+          <div/>
+        )
       }
     }
   };
@@ -126,7 +218,9 @@ export default function Home() {
       let command = args[0];
 
       if (commands[command]) {
-        setLog(prevLog => [...prevLog, { 'type': 'output', 'content': commands[command]['content'](args.slice(1)) } ])
+        const output = { 'type': 'output', 'content': commands[command]['content'](args.slice(1)) };
+
+        setLog(prevLog => [...prevLog, output ]);
       }
       setInputText('');
     }
