@@ -195,7 +195,7 @@ export default function Home() {
             case -3:
               return (
                 <div className="flex-grow flex pl-5 sm:pl-0">
-                  Error: can't go up past root-level directory
+                  Error: cannot go up past root-level directory
                 </div>
               )
           }
